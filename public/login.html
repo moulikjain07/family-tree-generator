@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="login-style.css" />
+</head>
+<body>
+    <h1>New User</h1>
+    <div class="container">
+        <form method="POST" action="/newUser" class="input-area">
+            <div class="row">
+                <div class="col-25">
+                    <label for="name">Name:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" name="name" id="user-name">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-25">
+                    <label for="age">Age:</label>
+                </div>
+                <div class="col-75">
+                    <input type="number" name="age">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-25">
+                    <label for="gender">Gender:</label>
+                </div>
+                <div class="col-75">
+                    <input type="radio" name="gender" value="male">
+                    <label for="male">Male</label>
+                    <br>
+                    <input type="radio" name="gender" value="female">
+                    <label for="female">Female</label>
+                </div>
+            </div>
+            <br>
+            <button id="login-button" class="submit-btn" type="submit" value="Check">Create</button>
+            <br>
+        </form>
+        
+    </div>
+</body>
+</html>

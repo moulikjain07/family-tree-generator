@@ -1,0 +1,157 @@
+<html>
+
+<head>
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="-1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="split left">
+        <div class="tree" id="FamilyTreeDiv">  
+            <ul>
+                <li>
+                    <div id="parents">
+                        <span class="female"></span>
+                        <span class="spacer"></span>
+                        <span class="male"></span>
+                    </div>
+                    <ul>
+                        <li>
+                            <div id="user">
+                                <span class="male"></span>
+                                <span class="spacer"></span>
+                                <span class="female"></span>
+                            </div>
+                            <ul>
+                                <li>
+                                    <div>
+                                        <span class="male"></span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div id="daughter">
+                                        <span class="female"></span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <div id="siblings">
+                                <span class="male"></span>
+                                <span class="spacer"></span>
+                                <span class="female"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="split right">
+        <div class="container">
+            <form action="/people" method="post">
+                <div class="row">
+                    <div class="col-25">
+                        <label for="relation">Relation:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="radio" name="relation" value="parent">
+                        <label for="parents">Parents</label>
+                        <br>
+                        <input type="radio" name="relation" value="partner">
+                        <label for="partner">Partner</label>
+                        <br>
+                        <input type="radio" name="relation" value="sibling">
+                        <label for="sibling">Sibling</label>
+                        <br>
+                        <input type="radio" name="relation" value="child">
+                        <label for="child">Child</label>
+                    </div>
+                </div>
+                <div id="father-details">
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="name">Name:</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" name="father_name">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="age">Age:</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="number" name="father_age">
+                        </div>
+                    </div>
+                </div>
+                <div id="mother-details">
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="name">Name:</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" name="mother_name">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="age">Age:</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="number" name="mother_age">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="name">Name:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="name">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="age">Age:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="number" name="age">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="gender">Gender:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="radio" name="gender" value="male">
+                        <label for="male">Male</label>
+                        <br>
+                        <input type="radio" name="gender" value="female">
+                        <label for="female">Female</label>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <button id="add-button" class="submit-btn" type="submit" value="Check">Add Member</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+      integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="index.js"></script>
+</body>
+
+</html>

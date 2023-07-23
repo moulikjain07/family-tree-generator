@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif, Arial;
+        font-size: 10pt;
+    }
+
+    .split {
+        height: 100%;
+        overflow: scroll;
+        display: flex;
+        position: fixed;
+        top: 0;
+    }
+
+    .left {
+        display: inline-block;
+        overflow-x: scroll;
+        width: 70%;
+        left: 0;
+    }
+
+    .right {
+        display: inline-block;
+        right: 0;
+        width: 30%;
+    }
+
+    .tree {
+        width: auto;
+        min-width: auto;
+        min-height: 500px;
+        overflow: auto;
+    }
+
+    .tree ul {
+        padding-top: 20px;
+        position: relative;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+    }
+
+    .tree li {
+        float: left;
+        text-align: center;
+        list-style-type: none;
+        position: relative;
+        padding: 20px 5px 0 5px;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+    }
+
+    .tree li::before,
+    .tree li::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 50%;
+        border-top: 1px solid #ccc;
+        width: 50%;
+        height: 20px;
+    }
+
+    .tree li::after {
+        right: auto;
+        left: 50%;
+        border-left: 1px solid #ccc;
+    }
+
+    .tree li:only-child::after,
+    .tree li:only-child::before {
+        display: none;
+    }
+
+    .tree li:only-child {
+        padding-top: 0;
+    }
+
+    .tree li:first-child::before,
+    .tree li:last-child::after {
+        border: 0 none;
+    }
+
+    .tree li:last-child::before {
+        border-right: 1px solid #ccc;
+        border-radius: 0 5px 0 0;
+        -webkit-border-radius: 0 5px 0 0;
+        -moz-border-radius: 0 5px 0 0;
+    }
+
+    .tree li:first-child::after {
+        border-radius: 5px 0 0 0;
+        -webkit-border-radius: 5px 0 0 0;
+        -moz-border-radius: 5px 0 0 0;
+    }
+
+    .tree ul ul::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        border-left: 1px solid #ccc;
+        width: 0;
+        height: 20px;
+    }
+
+    .tree li div {
+        border: 1px solid #ccc;
+        color: #666;
+        font-family: arial, verdana, tahoma;
+        font-size: 11px;
+        display: inline-block;
+        min-width: 80px;
+        min-height: 30px;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        top: 50%;
+        left: auto;
+    }
+
+    .tree li div .male {
+        background-color: lightblue;
+        display: inline-block;
+        width: 90px;
+        padding: 20px;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+    }
+
+    .tree li div .female {
+        background-color: lightpink;
+        display: inline-block;
+        width: 90px;
+        padding: 20px;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+    }
+
+    .tree li div .user {
+        background-color: rgb(255 148 1);
+        display: inline-block;
+        width: 90px;
+        padding: 20px;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+    }
+
+    .tree li div .spacer {
+        background-color: lightblue;
+        display: inline-block;
+        width: 10px;
+    }
+
+    .tree li div:hover,
+    .tree li div:hover+ul li div {
+        background: #c8e4f8;
+        color: #000;
+        border: 1px solid #94a0b4;
+    }
+
+    .container {
+        border: 1px solid black;
+        margin: 5px;
+        padding: 5px;
+        height: 230px;
+        width: 280px;
+        display: block;
+    }
+
+    .col-25 {
+        float: left;
+        width: 25%;
+        margin-top: 6px;
+
+    }
+
+    .col-75 {
+        float: left;
+        width: 75%;
+        margin-top: 6px;
+    }
+
+    label {
+        font-size: 17px;
+        font-family: 'arial, verdana, tahoma';
+    }
+
+    .box {
+    display: inline-block;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    }
+
+    .btn {
+    width: 30px;
+    height: 30px;
+    background: #FFF;
+    border: 1px solid #005bac;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    color: #005bac;
+    padding: 15px 10px 5px;
+    position: fixed;
+    text-align: center;
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+        transition: all 0.3s ease;
+    z-index: 1;
+    }
+
+    .btn:hover {
+    background: #eef;
+    }
+
+    .zoom {
+    bottom: 190px;
+    }
+
+    .zoom-out {
+    bottom: 120px;
+    }
+    
+    .zoom-init {
+    bottom: 50px;
+    }
+    
+</style>
+
+<body>
+    <div class="split left">
+        <div class="box">
+        <div class="tree" id="FamilyTreeDiv">
+            <ul>
+                <li>
+                    <%if(peopleInfo1 != null){%>
+                    <% for (i=0; i< peopleInfo1.parents.length; i++){ %>
+                    <div>
+                        <a href="http://localhost:5000/people?user_id=<%= peopleInfo1.parents[i]._id%>">
+                            <span class="<%= peopleInfo1.parents[i].gender%>">
+                                <%= peopleInfo1.parents[i].name %>
+                                    <br>
+                                 <%= peopleInfo1.parents[i].age %>
+                            </span>
+                        </a>
+                    </div>
+                    <% } %>
+                    <% } %>
+                    <ul>
+                        <li>
+                            <% for (i=0; i< peopleInfo.parents.length; i++){ %>
+                            <div>
+                                <a href="http://localhost:5000/people?user_id=<%= peopleInfo.parents[i]._id%>">
+                                    <span class="<%= peopleInfo.parents[i].gender%>">
+                                        <%= peopleInfo.parents[i].name %>
+                                            <br>
+                                            <%= peopleInfo.parents[i].age %>
+                                    </span>
+                                </a>
+                            </div>
+                            <% } %>
+                            <ul>
+                                <li>
+                                    <div>
+                                    <% if (peopleInfo.user.name){ %>
+                                    <a href="http://localhost:5000/people?user_id=<%= peopleInfo.user._id%>">
+                                        <span class="user">
+                                            <%= peopleInfo.user.name%>
+                                                <br>
+                                            <%= peopleInfo.user.age %>
+                                        </span>
+                                    </a>
+                                    <% } %>
+                                    <% if (peopleInfo.partner !=null){ %>
+                                        <a
+                                            href="http://localhost:5000/people?user_id=<%= peopleInfo.partner._id%>">
+                                            <span class="<%= peopleInfo.partner.gender%>">
+                                                <%= peopleInfo.partner.name %>
+
+                                                    <br>
+                                                    <%= peopleInfo.partner.age %>
+                                            </span>
+                                        </a>
+                                    <% } %>
+                                    </div>
+                                    <ul>
+                                        <% for (i=0; i< peopleInfo.childs.length; i++){ %>
+                                        <li>
+                                            <div>
+                                                <a href="http://localhost:5000/people?user_id=<%= peopleInfo.childs[i]._id%>">
+                                                    <span class="<%= peopleInfo.childs[i].gender %>">
+                                                        <%= peopleInfo.childs[i].name %>
+                                                                <br>
+                                                        <%= peopleInfo.childs[i].age %>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <ul>
+                                                <%if(peopleInfo2 != null && peopleInfo2[i].childs.length >= 1 ){%>
+                                                <% for (j=0; j < peopleInfo2[i].childs.length; j++){ %>
+                                                <li>
+                                                    <div>
+                                                        <a href="http://localhost:5000/people?user_id=<%= peopleInfo2[i].childs[j]._id%>">
+                                                            <span class="<%= peopleInfo2[i].childs[j].gender %>">
+                                                                <%= peopleInfo2[i].childs[j].name %>
+                                                                    <br>
+                                                                <%= peopleInfo2[i].childs[j].age %>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                                <% } %>
+                                                <% } %>
+                                            </ul>
+                                        </li>
+                                        <% } %>
+                                    </ul>
+                                </li>
+                                <% for (i=0; i< peopleInfo.siblings.length; i++){ %>
+                                <li>
+                                    <div>
+                                        <a href=http://localhost:5000/people?user_id=<%=peopleInfo.siblings[i]._id%>>
+                                            <span class="<%= peopleInfo.siblings[i].gender %>">
+                                                <%= peopleInfo.siblings[i].name %>
+                                                    <br>
+                                                    <%= peopleInfo.siblings[i].age %>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </li>
+                                <% } %>
+                            </ul>
+                        </li>
+                        <%if(peopleInfo1 != null){%>
+                        <% for (i=0; i< peopleInfo1.siblings.length; i++){ %>
+                            <li>
+                                <div>
+                                    <a href=http://localhost:5000/people?user_id=<%=peopleInfo1.siblings[i]._id%>>
+                                        <span class="<%= peopleInfo1.siblings[i].gender %>">
+                                            <%= peopleInfo1.siblings[i].name %>
+                                                <br>
+                                            <%= peopleInfo1.siblings[i].age %>
+                                        </span>
+                                    </a>
+                                </div>
+                            </li>
+                        <% } %>
+                        <% } %>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+    <div class="split right">
+        <div class="container">
+            <form action="/people" method="post">
+                <div class="col-25">
+                    <label for="relation">Relation:</label>
+                </div>
+                <div class="col-75">
+                    <input type="radio" name="relation" value="parent">
+                    <label for="parents">Parents</label>
+                    <br>
+                    <input type="radio" name="relation" value="partner">
+                    <label for="partner">Partner</label>
+                    <br>
+                    <input type="radio" name="relation" value="sibling">
+                    <label for="sibling">Sibling</label>
+                    <br>
+                    <input type="radio" name="relation" value="child">
+                    <label for="child">Child</label>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="name">Name:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="name">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="age">Age:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="number" name="age">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="gender">Gender:</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="radio" name="gender" value="male">
+                        <label for="male">Male</label>
+                        <br>
+                        <input type="radio" name="gender" value="female">
+                        <label for="female">Female</label>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <button id="add-button" class="submit-btn" type="submit" value="Check">Add Member</button>
+                </div>
+            </form>
+        </div>
+        <a href="http://localhost:5000/people?zoomIn=1">Zoom In</a>
+        <br>
+        <a href="http://localhost:5000/people?zoomOut=1">Zoom Out</a>
+        <a class="btn zoom"><i class="fas fa-search-plus"></i></a>
+        <a class="btn zoom-out"><i class="fas fa-search-minus"></i></a>
+        <a class="btn zoom-init"><i class="fas fa-recycle"></i></a>
+    </div>
+    <script>
+        
+    </script>
+</body>
+
+</html>
